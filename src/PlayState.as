@@ -106,10 +106,10 @@ package
 		
 		protected function handleCollision(Object1:FlxObject, Object2:FlxObject):void
 		{
-			if(Object1 is Enemy)
+			if(Object1 is Enemy && Object2 is Heart && (Object2 as Heart).isAttacking())
 				Object1.kill();
 			
-			if(Object2 is Enemy)
+			if(Object2 is Enemy && Object1 is Heart && (Object1 as Heart).isAttacking())
 				Object2.kill();
 		}
 		

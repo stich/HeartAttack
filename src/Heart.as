@@ -6,10 +6,14 @@ package
 	{
 		[Embed(source="megaman.png")] private var heartArt:Class;	//Graphic of the heart.
 		
+		private var _attackTimer:FlxTimer;
+		private var _attacking:Boolean;
+		
 		public function Heart()
 		{
 			super(FlxG.width/2-8, FlxG.height/2-8);
 			loadRotatedGraphic(heartArt,32,-1,false,true);
+			_attackTimer = new FlxTimer();
 		}
 		
 		//The main game loop function
@@ -34,9 +38,19 @@ package
 				//Space bar was pressed! Do an attack here.
 				
 				// start attack timer
-				
-				
+				_attacking = true
+				_attackTimer.start(0.2, 1, finishAttack);
 			}
+		}
+		
+		public function finishAttack(Timer:FlxTimer):void
+		{
+			_attacking = false;
+		}
+		
+		public function isAttacking():Boolean
+		{
+			return _attacking;
 		}
 	}
 }
