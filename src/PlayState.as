@@ -4,7 +4,7 @@ package
 	
 	public class PlayState extends FlxState
 	{
-		public var playerHeart:Heart;			//Refers to the little player playerShip
+		public static var playerHeart:Heart;			//Refers to the little player playerShip
 		//public var bullets:FlxGroup;	//A list of the bullets you shoot at the asteroids
 		public var enemies:FlxGroup;	//A list of all the asteroids 
 		//public var timer:Number;		//A timer to decide when to make a new asteroid
