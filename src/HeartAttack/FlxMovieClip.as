@@ -97,6 +97,7 @@ package HeartAttack
 			isPlaying = AutoPlay;
 			isLooping = IsLooping;
 			callbackOnComplete = CallbackOnComplete;
+			_lastFrameTime = 0;
 			
 			return this;
 		}
@@ -119,12 +120,16 @@ package HeartAttack
 			return _isPlaying;
 		}
 		
+		protected function restartAnimation():void
+		{
+			_mc.gotoAndStop(0); //restart the animation frmo the beginning IE: loop
+		}
 		/**
 		 * Check whether the <code>MovieClip</code> has finished playing.
 		 */
 		override public function update():void 
 		{
-			if (isPlaying && _mc != null) {
+			if (isPlaying) {
 //				if (_mc.currentFrame == _mc.totalFrames || _mc.currentFrame < _mcLastFrame) {
 //					if (isLooping) _mc.gotoAndPlay(0); // loop back to beginning
 //					else {
@@ -138,15 +143,22 @@ package HeartAttack
 				if( elapsed > _frameTime )
 				{
 					_lastFrameTime = thisTime;
+					_mcBitmapData = null;
 					
 					var nextFrame:int = _mc.currentFrame + 1;
-					if( nextFrame >= _mc.totalFrames )
-						nextFrame = 0;
-					_mc.gotoAndStop(nextFrame);
 					
-					_mcBitmapData = null;
+					var animationComplete:Boolean = nextFrame >= _mc.totalFrames;
+					if( animationComplete )
+					{
+						if( callbackOnComplete != null )
+							callbackOnComplete();
+						else
+							_mc.gotoAndStop(0);
+					}
+					else
+						_mc.gotoAndStop(nextFrame);
 				}
-				
+					
 			}
 		}
 		

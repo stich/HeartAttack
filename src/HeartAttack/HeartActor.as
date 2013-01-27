@@ -25,6 +25,11 @@ package HeartAttack
 			play("idle");
 		}
 		
+		public function isAttacking():Boolean
+		{
+			return false;
+		}
+		
 		public override function update():void
 		{
 			super.update();
@@ -40,7 +45,11 @@ package HeartAttack
 				this.facing = FlxObject.LEFT;
 				run();
 			}
-			else
+			else if( velocity.y != 0 )
+			{
+				run();
+			}
+			else if( !isAttacking() )
 				idle();
 		}
 	}
