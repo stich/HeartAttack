@@ -1,6 +1,9 @@
 package
 {
 	import org.flixel.*;
+	import HeartAttack.Enemy;
+	import HeartAttack.ChargingEnemy;
+	import HeartAttack.Heart;
 	
 	public class PlayState extends FlxState
 	{
@@ -34,6 +37,10 @@ package
 			for(count = 0; count < 5; ++count)
 			{
 				enemies.add(new Enemy());
+			}
+			for(count = 0; count < 3; ++count)
+			{
+				enemies.add(new ChargingEnemy());
 			}
 			add(enemies);
 			
