@@ -5,13 +5,16 @@ package HeartAttack
 	
 	public class ChargingEnemy extends Enemy
 	{
-		private static const chargerSpeed:Number = 30.0;
+//		private chargerSpeed:Number = 30.0;
+		private var speed:Number = 30.0;
 		
-		public function ChargingEnemy()
+		public function ChargingEnemy($speed:Number)
 		{
 			super();
 			
-			this.maxVelocity = new FlxPoint(chargerSpeed, chargerSpeed);
+			speed = $speed;
+			
+			this.maxVelocity = new FlxPoint(speed, speed);
 		}
 		
 		public override function update():void
@@ -21,7 +24,21 @@ package HeartAttack
 			var dX:Number = thePlayer.x - this.x;
 			var dY:Number = thePlayer.y - this.y;
 			
+			
+			if( Math.abs(dX) < dashDistance && Math.abs(dY) < dashDistance )
+			{
+				//dash
+				dX = 2000.0 / dX;
+				dY = 2000.0 / dY;
+				
+				maxVelocity = new FlxPoint(speed * 10.0, speed * 10.0);
+			}
+			else
+				maxVelocity = new FlxPoint(speed, speed);
+			
 			this.acceleration = new FlxPoint(dX,dY);
+			
+			super.update();
 		}
 	}
 }

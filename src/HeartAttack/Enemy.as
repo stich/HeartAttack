@@ -1,38 +1,28 @@
 package HeartAttack
 {
 	import org.flixel.*;
+	import HeartAttack.HeartActor;
 
-	public class Enemy extends FlxSprite
+	public class Enemy extends HeartActor
 	{
 		[Embed(source="frostman.png")] private var spriteResrc:Class;	//Graphic of the enemy.
 		
-		private var _health:int;
+		protected static const dashDistance:Number = 20;
 		
 		public function Enemy()
 		{
 			super(Math.random()*FlxG.width, Math.random()*FlxG.height);
 			
-			loadRotatedGraphic(spriteResrc,32,-1,false,true);
+//			loadRotatedGraphic(spriteResrc,32,-1,false,true);
+			loadGraphic(spriteResrc, false, true);
 			
-			addAnimation("runLeft", [0]);
-			addAnimation("runRight",[0]);
-			addAnimation("idle",[0]);
-			
-			_health = 100;
+			this.health = 100;
 		}
 		
 		override public function update():void
 		{
+			
 			super.update();
-			
-			var velX:Number = velocity.x;
-			if( velX > 0 )
-				play("runRight");
-			else if( velX < 0 )
-				play("runLeft");
-			else
-				play("idle");
-			
 		}
 	}
 }
