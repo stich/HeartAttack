@@ -133,8 +133,8 @@ package
 			{
 				if(player.isAttacking())
 				{
-					var playerCenterX:Number = player.x + player.width*0.5;
-					var enemyCenterX:Number = enemy.x + enemy.width*0.5;
+					var playerCenterX:Number = player.x + player.frameWidth*0.5;
+					var enemyCenterX:Number = enemy.x + enemy.frameWidth*0.5;
 					
 					if(player.facing == FlxObject.LEFT && playerCenterX >= enemyCenterX)
 						enemy.kill();
