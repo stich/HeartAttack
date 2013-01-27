@@ -97,6 +97,7 @@ package HeartAttack
 			isPlaying = AutoPlay;
 			isLooping = IsLooping;
 			callbackOnComplete = CallbackOnComplete;
+			_lastFrameTime = 0;
 			
 			return this;
 		}
