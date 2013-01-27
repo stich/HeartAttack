@@ -11,10 +11,12 @@ package HeartAttack
 		
 		private var _heartStand:MovieClip;
 		private var _heartWalk:MovieClip;
+		private var _heartPunch1:MovieClip;
+		private var _heartPunch2:MovieClip;
 		private var _heartAttack:MovieClip = null;
 		
 		private var _attackTimer:FlxTimer;
-		private var _attacking:Boolean;
+		private var _attacking:Boolean = false;
 		
 		public function Heart()
 		{
@@ -22,6 +24,8 @@ package HeartAttack
 //			loadGraphic(heartArt, false, true);
 			_heartStand = new HeartStand();
 			_heartWalk = new HeartWalk();
+			_heartPunch1 = new Punch1();
+			_heartPunch2 = new Punch2();
 			
 			antialiasing = true;
 			this.origin = new FlxPoint(75, 95);
@@ -33,13 +37,35 @@ package HeartAttack
 		
 		protected override function idle():void
 		{
-			if( !isIdle() )
-				loadMovieClip(_heartStand, 150, 192, true, true);
+			if( !isIdle() && !isAttacking() )
+			{
+				trace("idling");
+				loadMovieClip(_heartStand, 150, 192, true, true, restartAnimation);
+			}
 		}
 		protected override function run():void
 		{
-			if( !isRunning() )
-				loadMovieClip(_heartWalk, 150, 192, true, true);
+			if( !isRunning() && !isAttacking() )
+			{
+				trace("running");
+				loadMovieClip(_heartWalk, 150, 192, true, true, restartAnimation);
+			}
+		}
+		protected function punchWeak():void
+		{
+			if( !isPunching() )
+			{
+				trace("Punching");
+				_attacking = true;
+				var theClip:MovieClip = _heartPunch1;//Math.random() > 0.5 ? _heartPunch1 : _heartPunch2;
+				loadMovieClip(theClip, 250, 192, true, true, didFinishPunch);
+		
+			}
+		}
+		
+		private function isPunching():Boolean
+		{
+			return _attacking;// || _mc == _heartPunch1 || _mc == _heartPunch2;
 		}
 		private function isRunning():Boolean
 		{
@@ -50,10 +76,12 @@ package HeartAttack
 			return _mc == _heartStand;
 		}
 		
-		protected function didFinishAnimation():void
+		protected function didFinishPunch():void
 		{
-			if( !_attacking )
-				_mc.gotoAndStop(0); //restart the animation frmo the beginning IE: loop
+			trace("Finished punching");
+			_attacking = false;
+			
+ 			idle(); //restart the animation frmo the beginning IE: loop
 		}
 		
 		//The main game loop function
@@ -73,22 +101,22 @@ package HeartAttack
 			if(FlxG.keys.DOWN)
 				velocity.y += 40;
 			
-			if(FlxG.keys.justPressed("SPACE"))
+			if( FlxG.keys.justPressed("SPACE") )
 			{
 				//Space bar was pressed! Do an attack here.
 				
 				// start attack timer
-				_attacking = true
-				_attackTimer.start(0.2, 1, finishAttack);
+//				_attackTimer.start(0.2, 1, finishAttack);
+				punchWeak();
 			}
 		}
 		
-		public function finishAttack(Timer:FlxTimer):void
-		{
-			_attacking = false;
-		}
+//		public function finishAttack(Timer:FlxTimer):void
+//		{
+//			_attacking = false;
+//		}
 		
-		public function isAttacking():Boolean
+		public override function isAttacking():Boolean
 		{
 			return _attacking;
 		}
