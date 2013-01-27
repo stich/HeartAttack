@@ -40,6 +40,7 @@ package HeartAttack
 			if( !isIdle() && !isAttacking() )
 			{
 				trace("idling");
+				_frameTime = 83;
 				loadMovieClip(_heartStand, 150, 192, true, true, restartAnimation);
 			}
 		}
@@ -48,6 +49,7 @@ package HeartAttack
 			if( !isRunning() && !isAttacking() )
 			{
 				trace("running");
+				_frameTime = 83;
 				loadMovieClip(_heartWalk, 150, 192, true, true, restartAnimation);
 			}
 		}
@@ -60,7 +62,7 @@ package HeartAttack
 				
 				var theClip:MovieClip = _heartPunch2;//Math.random() > 0.5 ? _heartPunch1 : _heartPunch2;
 				loadMovieClip(theClip, 250, 192, true, true, didFinishPunch);
-				_frameTime = 500;
+				_frameTime = 200;
 		
 			}
 		}
@@ -83,6 +85,7 @@ package HeartAttack
 			trace("Finished punching");
 			_attacking = false;
 			
+			restartAnimation();
  			idle(); //restart the animation frmo the beginning IE: loop
 		}
 		
