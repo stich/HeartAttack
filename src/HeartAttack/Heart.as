@@ -2,7 +2,7 @@ package HeartAttack
 {
 	import org.flixel.*;
 	
-	public class Heart extends FlxSprite
+	public class Heart extends HeartActor
 	{
 		[Embed(source="megaman.png")] private var heartArt:Class;	//Graphic of the heart.
 		
@@ -12,7 +12,8 @@ package HeartAttack
 		public function Heart()
 		{
 			super(FlxG.width/2-8, FlxG.height/2-8);
-			loadRotatedGraphic(heartArt,32,-1,false,true);
+			loadGraphic(heartArt, false, true);
+//			loadRotatedGraphic(heartArt,32,-1,false,true);
 			_attackTimer = new FlxTimer();
 		}
 		

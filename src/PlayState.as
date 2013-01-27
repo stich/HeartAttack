@@ -35,13 +35,13 @@ package
 			
 			var count:int;
 			
-			for(count = 0; count < 5; ++count)
+//			for(count = 0; count < 5; ++count)
+//			{
+//				enemies.add(new Enemy());
+//			}
+			for(count = 0; count < 8; ++count)
 			{
-				enemies.add(new Enemy());
-			}
-			for(count = 0; count < 3; ++count)
-			{
-				enemies.add(new ChargingEnemy());
+				enemies.add(new ChargingEnemy(Math.random() * 40.0));
 			}
 			add(enemies);
 			
