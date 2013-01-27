@@ -133,7 +133,13 @@ package
 			{
 				if(player.isAttacking())
 				{
-					enemy.kill();
+					var playerCenterX:Number = player.x + player.width*0.5;
+					var enemyCenterX:Number = enemy.x + enemy.width*0.5;
+					
+					if(player.facing == FlxObject.LEFT && playerCenterX >= enemyCenterX)
+						enemy.kill();
+					else if(player.facing == FlxObject.RIGHT && playerCenterX >= enemyCenterX)
+						enemy.kill();
 				}
 			}
 		}
