@@ -11,7 +11,7 @@ package HeartAttack
 		{
 			super();
 			
-			this.maxVelocity = new FlxPoint(chargerSpeed, chargerSpeed);;
+			this.maxVelocity = new FlxPoint(chargerSpeed, chargerSpeed);
 		}
 		
 		public override function update():void
