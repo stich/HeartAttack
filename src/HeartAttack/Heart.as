@@ -1,10 +1,16 @@
 package HeartAttack
 {
+	import flash.display.MovieClip;
+	
 	import org.flixel.*;
 	
 	public class Heart extends HeartActor
 	{
-		[Embed(source="megaman.png")] private var heartArt:Class;	//Graphic of the heart.
+//		[Embed(source="megaman.png")] private var heartArt:Class;	//Graphic of the heart.
+//		[Embed(source="HeartAttack.fla")] private var heartArt:Class;	//Graphic of the heart.
+		
+		private var _heartStand:MovieClip;
+		private var _heartWalk:MovieClip;
 		
 		private var _attackTimer:FlxTimer;
 		private var _attacking:Boolean;
@@ -12,10 +18,30 @@ package HeartAttack
 		public function Heart()
 		{
 			super(FlxG.width/2-8, FlxG.height/2-8);
-			loadGraphic(heartArt, false, true);
+//			loadGraphic(heartArt, false, true);
+			_heartStand = new HeartStand();
+			_heartWalk = new HeartWalk();
+			
+			antialiasing = true;
+			this.origin = new FlxPoint(75, 95);
+			
+			loadMovieClip(_heartStand, 150, 192, true, true);
 //			loadRotatedGraphic(heartArt,32,-1,false,true);
 			_attackTimer = new FlxTimer();
 		}
+		
+		protected override function idle():void
+		{
+			if( _mc != _heartStand )
+				loadMovieClip(_heartStand, 150, 192, true, true);
+		}
+		protected override function run():void
+		{
+			if( _mc != _heartWalk )
+				loadMovieClip(_heartWalk, 150, 192, true, true);
+		}
+		
+		
 		
 		//The main game loop function
 		override public function update():void
