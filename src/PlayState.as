@@ -138,7 +138,7 @@ package
 					
 					if(player.facing == FlxObject.LEFT && playerCenterX >= enemyCenterX)
 						enemy.kill();
-					else if(player.facing == FlxObject.RIGHT && playerCenterX >= enemyCenterX)
+					else if(player.facing == FlxObject.RIGHT && playerCenterX <= enemyCenterX)
 						enemy.kill();
 				}
 			}
