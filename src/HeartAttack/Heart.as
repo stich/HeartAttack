@@ -60,7 +60,7 @@ package HeartAttack
 				trace("Punching");
 				_attacking = true;
 				
-				var theClip:MovieClip = _heartPunch2;//Math.random() > 0.5 ? _heartPunch1 : _heartPunch2;
+				var theClip:MovieClip = Math.random() > 0.5 ? _heartPunch1 : _heartPunch2;
 				loadMovieClip(theClip, 250, 192, true, true, didFinishPunch);
 				_frameTime = 200;
 		
