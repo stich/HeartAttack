@@ -13,11 +13,14 @@ package HeartAttack
 		
 		static private var WALK_FRAMES:Array = [0, 1, 2];
 		static private var HURT_FRAMES:Array = [3, 4, 5];
+		static private var STUN_FRAMES:Array = [5];
 		
 		static private var WALK:int = 0;
 		static private var HURT:int = 1;
+		static private var STUNNED:int = 2;
 		
 		private var _animState:int;
+		private var _stunTimer:FlxTimer;
 		
 		public function ChargingEnemy($speed:Number)
 		{
@@ -26,10 +29,13 @@ package HeartAttack
 			loadGraphic(spriteResrc, true, true, 200, 200);
 			
 			addAnimation("walking", WALK_FRAMES, 8, true);
-			addAnimation("hurt", HURT_FRAMES, 8, false);
+			addAnimation("hurt", HURT_FRAMES, 60, false);
+			addAnimation("stunned", STUN_FRAMES, 8, true);
 			addAnimationCallback(finishAnimation);
 			
 			play("walking", true);
+			
+			_stunTimer = new FlxTimer();
 			
 			speed = $speed;
 			
@@ -38,7 +44,7 @@ package HeartAttack
 		
 		public override function update():void
 		{
-			if(_animState == HURT)
+			if(_animState == HURT || _animState == STUNNED)
 			{
 				super.update();
 				return;
@@ -80,13 +86,20 @@ package HeartAttack
 			play("hurt", true);
 			_animState = HURT;
 			
-			if(facing == FlxObject.RIGHT)
+			var thePlayer:Heart = PlayState.playerHeart;
+			
+			var dX:Number = thePlayer.x - this.x;
+			var dY:Number = thePlayer.y - this.y;
+			
+			if(dX < 0)
 			{
-				velocity.x = -100;
+				velocity.x = 50;
+				facing = FlxObject.LEFT;
 			}
 			else
 			{
-				velocity.x = 100;
+				velocity.x = -50;
+				facing = FlxObject.RIGHT;
 			}
 			
 			super.hurt(Damage);
@@ -96,9 +109,22 @@ package HeartAttack
 		{
 			if(name == "hurt" && frameIndex == 5)
 			{
-				_animState = WALK;
-				play("walking", true);
+				// hold this frame for stun lock.
+				_stunTimer.start(1, 1, finishStunlock);
+				
+				velocity.x = 0;
+				
+				_animState = STUNNED;
+				play("stunned", true);
 			}
+		}
+		
+		private function finishStunlock(timer:FlxTimer):void
+		{
+			timer.stop();
+			
+			_animState = WALK;
+			play("walking", true);
 		}
 	}
 }

@@ -42,7 +42,7 @@ package
 //			}
 			for(count = 0; count < 8; ++count)
 			{
-				//enemies.add(new ChargingEnemy(Math.random() * 40.0));
+				enemies.add(new ChargingEnemy(Math.random() * 40.0));
 			}
 			
 			enemies.add(new Butter());
@@ -140,9 +140,9 @@ package
 					var enemyCenterX:Number = enemy.x + enemy.frameWidth*0.5;
 					
 					if(player.facing == FlxObject.LEFT && playerCenterX >= enemyCenterX)
-						enemy.kill();
+						enemy.hurt(0);
 					else if(player.facing == FlxObject.RIGHT && playerCenterX <= enemyCenterX)
-						enemy.kill();
+						enemy.hurt(0);
 				}
 			}
 		}
