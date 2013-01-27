@@ -1,5 +1,6 @@
 package
 {
+	import HeartAttack.Butter;
 	import HeartAttack.ChargingEnemy;
 	import HeartAttack.Enemy;
 	import HeartAttack.Heart;
@@ -41,8 +42,10 @@ package
 //			}
 			for(count = 0; count < 8; ++count)
 			{
-				enemies.add(new ChargingEnemy(Math.random() * 40.0));
+				//enemies.add(new ChargingEnemy(Math.random() * 40.0));
 			}
+			
+			enemies.add(new Butter());
 			add(enemies);
 			
 			//Initialize the list of asteroids, and generate a few right off the bat
