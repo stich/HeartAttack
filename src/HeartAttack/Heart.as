@@ -11,6 +11,7 @@ package HeartAttack
 		
 		private var _heartStand:MovieClip;
 		private var _heartWalk:MovieClip;
+		private var _heartAttack:MovieClip = null;
 		
 		private var _attackTimer:FlxTimer;
 		private var _attacking:Boolean;
@@ -32,16 +33,28 @@ package HeartAttack
 		
 		protected override function idle():void
 		{
-			if( _mc != _heartStand )
+			if( !isIdle() )
 				loadMovieClip(_heartStand, 150, 192, true, true);
 		}
 		protected override function run():void
 		{
-			if( _mc != _heartWalk )
+			if( !isRunning() )
 				loadMovieClip(_heartWalk, 150, 192, true, true);
 		}
+		private function isRunning():Boolean
+		{
+			return _mc == _heartWalk;
+		}
+		private function isIdle():Boolean
+		{
+			return _mc == _heartStand;
+		}
 		
-		
+		protected function didFinishAnimation():void
+		{
+			if( !_attacking )
+				_mc.gotoAndStop(0); //restart the animation frmo the beginning IE: loop
+		}
 		
 		//The main game loop function
 		override public function update():void
