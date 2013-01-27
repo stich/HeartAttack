@@ -15,6 +15,8 @@ package
 		//The main game loop function
 		override public function update():void
 		{
+			super.update();
+			
 			//This is where we handle moving our char
 			velocity.x = 0;
 			velocity.y = 0;
@@ -30,6 +32,10 @@ package
 			if(FlxG.keys.justPressed("SPACE"))
 			{
 				//Space bar was pressed! Do an attack here.
+				
+				// start attack timer
+				
+				
 			}
 		}
 	}

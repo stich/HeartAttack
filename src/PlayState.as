@@ -1,6 +1,6 @@
 package
 {
-	import org.flixel.*
+	import org.flixel.*;
 	
 	public class PlayState extends FlxState
 	{
@@ -27,7 +27,15 @@ package
 			playerHeart = new Heart();
 			add(playerHeart);
 			
+			enemies = new FlxGroup();
 			
+			var count:int;
+			
+			for(count = 0; count < 5; ++count)
+			{
+				enemies.add(new Enemy());
+			}
+			add(enemies);
 			
 			//Initialize the list of asteroids, and generate a few right off the bat
 			/*asteroids = new FlxGroup();
@@ -63,7 +71,7 @@ package
 		{
 			super.update();
 			
-			
+			FlxG.overlap(playerHeart, enemies, handleCollision);
 			
 			//Count down the new asteroid timer
 			/*timer -= FlxG.elapsed;
@@ -94,6 +102,15 @@ package
 		{
 			Object1.kill();
 			Object2.kill();
+		}
+		
+		protected function handleCollision(Object1:FlxObject, Object2:FlxObject):void
+		{
+			if(Object1 is Enemy)
+				Object1.kill();
+			
+			if(Object2 is Enemy)
+				Object2.kill();
 		}
 		
 		//This function resets the timer and adds a new asteroid to the game
