@@ -1,9 +1,10 @@
 package
 {
-	import org.flixel.*;
-	import HeartAttack.Enemy;
 	import HeartAttack.ChargingEnemy;
+	import HeartAttack.Enemy;
 	import HeartAttack.Heart;
+	
+	import org.flixel.*;
 	
 	public class PlayState extends FlxState
 	{
@@ -113,11 +114,34 @@ package
 		
 		protected function handleCollision(Object1:FlxObject, Object2:FlxObject):void
 		{
-			if(Object1 is Enemy && Object2 is Heart && (Object2 as Heart).isAttacking())
-				Object1.kill();
+			var player:Heart = null;
+			var enemy:Enemy = null;
 			
-			if(Object2 is Enemy && Object1 is Heart && (Object1 as Heart).isAttacking())
-				Object2.kill();
+			if(Object1 is Enemy && Object2 is Heart)
+			{
+				player = Object2 as Heart;
+				enemy = Object1 as Enemy;
+			}
+			
+			if(Object2 is Enemy && Object1 is Heart)
+			{
+				player = Object1 as Heart;
+				enemy = Object2 as Enemy;
+			}
+			
+			if(player != null && enemy != null)
+			{
+				if(player.isAttacking())
+				{
+					var playerCenterX:Number = player.x + player.frameWidth*0.5;
+					var enemyCenterX:Number = enemy.x + enemy.frameWidth*0.5;
+					
+					if(player.facing == FlxObject.LEFT && playerCenterX >= enemyCenterX)
+						enemy.kill();
+					else if(player.facing == FlxObject.RIGHT && playerCenterX <= enemyCenterX)
+						enemy.kill();
+				}
+			}
 		}
 		
 		//This function resets the timer and adds a new asteroid to the game
