@@ -65,13 +65,13 @@ package HeartAttack
 			velocity.x = 0;
 			velocity.y = 0;
 			if(FlxG.keys.LEFT)
-				velocity.x -= 40;
+				velocity.x -= 120;
 			if(FlxG.keys.RIGHT)
-				velocity.x += 40;
+				velocity.x += 120;
 			if(FlxG.keys.UP)
-				velocity.y -= 40;
+				velocity.y -= 120;
 			if(FlxG.keys.DOWN)
-				velocity.y += 40;
+				velocity.y += 120;
 			
 			if(FlxG.keys.justPressed("SPACE"))
 			{
